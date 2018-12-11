@@ -2,7 +2,7 @@
 # author: guerillatux
 # desc: wrapper script for cronjobs whith or without piped commands
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of a command or script
-# last modified: 1.12.2018
+# last modified: 11.12.2018
 
 if [ $# -ne 1 ]; then
     echo "This Script needs 1 Parameter, a Command-Chain"
@@ -16,6 +16,12 @@ if ! which curl >/dev/null; then
     exit 1
 fi
 
+# Include Config File
+if ! source /opt/cronguard/url.inc.sh 2>/dev/null; then
+    log "Could not include url.inc.sh from /opt/cronguard, aborting"
+    exit 1
+fi
+
 # Variables
 command="$1"
 host=$(hostname)
@@ -24,7 +30,7 @@ start_time=$(date +%s)
 action="start"
 
 # First curl, adding a new Database Entry with the Starttime
-curl -X POST -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" http://localhost/cron.php
+curl -X POST -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
 
 # Execute the Cron Command and save the Pipestatus in the Variable "pipe"
 eval "$command; "'pipe=${PIPESTATUS[*]}'
@@ -51,4 +57,4 @@ fi
 # Define the Endtime and make the second Curl, modify the above Database Entry
 action="finished"
 end_time=$(date +%s)
-curl -X POST -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" http://localhost/cron.php
+curl -X POST -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
