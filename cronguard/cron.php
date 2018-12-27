@@ -17,8 +17,16 @@ if ($action == 'start') {
     else {  
         die("no data retrieved\n");
     }
-    $sql = "INSERT INTO jobs (token, host, start_time, command, action)
-    VALUES ('$token', '$host', '$start_time', '$command', '$action')";
+    $stmt = $conn->prepare("INSERT INTO job_foo (token, host, start_time, command, action)
+    VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssiss", $token, $host, $start_time, $command, $action);
+    if ($stmt->execute() === TRUE){
+        echo "New record created successfully";
+    }
+    else {
+        echo "Error with creating a new record";
+    }
+    $stmt->close();
 }
 elseif ($action == "finished") {
     if (isset($_POST['token']) && isset($_POST['end_time']) && isset($_POST['result'])) {
@@ -29,16 +37,18 @@ elseif ($action == "finished") {
     else {
         die("no data retrieved\n");
     }
-    $sql = "UPDATE jobs SET end_time='$end_time', action='$action', result='$result' WHERE token='$token'";
+    $stmt = $conn->prepare("UPDATE job_foo SET end_time = ?, action = ?, result = ? WHERE token = ?");
+    $stmt->bind_param("isss", $end_time, $action, $result, $token);
+    if ($stmt->execute() === TRUE){
+        echo "Record updated successfully";
+    }
+    else {
+        echo "Error with updating the record";
+    }
+    $stmt->close();
 }
 else {
     die("something messed up");
-}
-
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
 $conn->close();
