@@ -1,5 +1,35 @@
 <?php
 require_once ("db.inc.php");
+
+function api() {
+    global $conn;
+    $sql = "SELECT * FROM job_foo";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $cronjobs = array();
+        while($row = $result->fetch_assoc()) {
+            $cronjobs[] = $row;
+        } 
+    header('Content-Type: application/json');
+    echo json_encode($cronjobs, JSON_PRETTY_PRINT);
+    }
+    else {
+        echo "0 results";
+    }
+    exit();
+}
+
+if (isset ($_GET['method'])) {
+    $method = $_GET['method'];
+    if ("$method" == "api") {
+        api();
+    }
+    else {
+        echo "Invalid Argument ($method), use api<br>";
+	exit();
+    }
+}
+
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
 }
