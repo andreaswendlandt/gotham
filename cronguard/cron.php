@@ -14,7 +14,7 @@ function api() {
     echo json_encode($cronjobs, JSON_PRETTY_PRINT);
     }
     else {
-        echo "0 results";
+        echo "0 Results";
     }
     exit();
 }
@@ -28,6 +28,11 @@ if (isset ($_GET['method'])) {
         echo "Invalid Argument ($method), use api<br>";
 	exit();
     }
+}
+
+if (empty($_POST)) {
+    echo "Move along folks, nothing to see here!";
+    exit();
 }
 
 if (isset($_POST['action'])) {
