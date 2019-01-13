@@ -1,1 +1,1 @@
-url=http://localhost/cron.php
+url=http://localhost/cronguard.php
