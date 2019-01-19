@@ -3,7 +3,7 @@ require_once ("db.inc.php");
 
 function api() {
     global $conn;
-    $sql = "SELECT * FROM job_foo";
+    $sql = "SELECT * FROM jobs";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $cronjobs = array();
@@ -52,7 +52,7 @@ if ($action == 'start') {
     else {  
         die("no data retrieved\n");
     }
-    $stmt = $conn->prepare("INSERT INTO job_foo (token, host, start_time, command, action)
+    $stmt = $conn->prepare("INSERT INTO jobs (token, host, start_time, command, action)
     VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $token, $host, $start_time, $command, $action);
     if ($stmt->execute() === TRUE){
@@ -72,7 +72,7 @@ elseif ($action == "finished") {
     else {
         die("no data retrieved\n");
     }
-    $stmt = $conn->prepare("UPDATE job_foo SET end_time = ?, action = ?, result = ? WHERE token = ?");
+    $stmt = $conn->prepare("UPDATE jobs SET end_time = ?, action = ?, result = ? WHERE token = ?");
     $stmt->bind_param("isss", $end_time, $action, $result, $token);
     if ($stmt->execute() === TRUE){
         echo "Record updated successfully";
