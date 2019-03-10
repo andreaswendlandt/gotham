@@ -1,0 +1,43 @@
+# jobqueue with beanstalkd and pheanstalk
+* the jobqueue is working with pheanstalk and - therefor a running beanstalkd server 
+* it consists of 3 parts, the producer with the producer.php script, the consumer with the consumer.php script and additionally the cleanup     script clean_tube.php
+
+1. prerequisites
+ 1.1 beanstalkd - a running beanstalkd server, this is quickly done, just install it via your package manager, for instance on a                   debian/ubuntu system with
+     'apt-get update && apt-get install beanstalkd'
+     there is not more to configure except to change the directive 'START=no' to 'START=yes' in /etc/default/beanstalkd to ensure that the 
+     server will start automatically after a reboot
+
+ 1.2 pheanstalk - the package installed via composer
+      -download the composer package and install it with 'curl -sS https://getcomposer.org/installer | php'
+      - create a composer.json file with the following content:
+        {
+          "require": {
+            "pda/pheanstalk": "3.0.0"
+          }
+        }
+      - install the package with 'php composer.phar install'
+      - this needs to be done on all servers where either one or all of the above scripts(producer, consumer, cleaner) are supposed to run
+2. producer.php - the producer
+ - it will read the jobfile 'jobs.txt', line by line and put each job to the beanstalkd tube
+ - in case the jobfile is not there or is empty the producer will quit with an error message - on the screen and the logfile 
+   /var/log/job_producer.log
+ - a possible jobs.txt looks like this:
+   ls -la /tmp; sleep 2
+   echo "<?php phpinfo();" | php
+ - each job/command that should be executed is written on a single line
+ - the producer.php needs a config file producer.inc.php - it contains the ip of the beanstalkd server, the tube that will be used and
+   the jobfile to read from
+
+3. consumer.php - the consumer/worker
+ - it will take line after line a every job from the tube, execute it and delete it afterwards, if there are no further ones or there are 
+   none at all it will quit
+ - it will reserve the job that is processed so there can be several worker started in parallel executing jobs from the queue
+ - it needs the consumer.inc.php config file - it contains the ip of the beanstalkd server and the tube that will be used
+
+4. clean_tube.php - the cleanup script
+ - just in case some jobs that you don't want to be executed find their way to the tube you need to remove them - with this script, it will 
+   delete all existing jobs in the queue 
+ - it needs the clean_tube.inc.php config file, it contains the ip of the beanstalkd server and the tube that will be used
+
+* all 3 scripts will write a logfile about what they are doing (/var/log/job_producer.log /var/log/job_consumer.log /var/log/job_clean.log) 
