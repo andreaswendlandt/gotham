@@ -1,5 +1,6 @@
-# CRONGUARD - ensure that your cronjobs finish succesfully or get notified via mail if they don't
-* this application consists of 3 parts, at the client side the client wrapper script cron_wrapper.sh, at the server side the cronguard daemon   and the cronguard.php script - therefor a running web- and database server is required 
+# CRONGUARD
+## ensure that your cronjobs finish succesfully or get notified via mail if they don't
+###### this application consists of 3 parts, at the client side the client wrapper script cron_wrapper.sh, at the server side the cronguard daemon   and the cronguard.php script - therefor a running web- and database server is required 
 
 1. client
  1.1 cronwrapper
@@ -23,6 +24,7 @@
     
  2.1.1 database creation (mysql)
   - mysql table structure:
+    ```
     jobid(bigint)
     token(char 6)
     host(varchar 50)
@@ -31,10 +33,17 @@
     command(varchar 300)
     action(varchar 8)
     result(varchar 7)
+    ```
   - mysql commands to create the database, table and user:
-   - CREATE DATABASE cronguard;
-   - CREATE TABLE jobs ( jobid INT NOT NULL AUTO_INCREMENT, token CHAR(6), host VARCHAR(50), start_time BIGINT, end_time BIGINT,                   command VARCHAR(300), action VARCHAR(8), result VARCHAR(7), PRIMARY KEY (jobid) ) ENGINE MyISAM;
-   - GRANT ALL PRIVILEGES ON cronguard.* TO 'cronguard'@'localhost' identified by 'cronguard'
+   ```
+   CREATE DATABASE cronguard;
+   ```
+   ```
+   CREATE TABLE jobs ( jobid INT NOT NULL AUTO_INCREMENT, token CHAR(6), host VARCHAR(50), start_time BIGINT, end_time BIGINT,                   command VARCHAR(300), action VARCHAR(8), result VARCHAR(7), PRIMARY KEY (jobid) ) ENGINE MyISAM;
+   ```
+   ```
+   GRANT ALL PRIVILEGES ON cronguard.* TO 'cronguard'@'localhost' identified by 'cronguard'
+   ```
 
  2.2 webserver + php
   - in case of apache2 and php(in that example php-7.2) the following packages must be installed:
