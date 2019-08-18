@@ -85,12 +85,23 @@
     - restart will stop and then start cronguard in case it is running, if it is not running it will be started
     - status will print out the state of cronguard, either it is running or not
  3.3 best practice
-    - copy the script to /etc/init.d/cronguard - now it can be treated "the *nix fashion way" like                                                  `/etc/init.d/cronguard start | stop | restart | status`
+    - copy the script to /etc/init.d/cronguard - now it can be treated "the *nix fashion way" like                                                ```
+    /etc/init.d/cronguard start | stop | restart | status
+    ```
     - one step further - activate the daemon so it will start and stop with the system:
-      `update-rc.d cronguard defaults` (to disable it - `update-rc.d cronguard disable`)
+    ```
+    update-rc.d cronguard defaults
+    ```
+    - to disable it
+    ```
+    update-rc.d cronguard disable
+    ```
 
 4. additional stuff
  4.1. nagios/icinga plugin check_daemon.sh
   - for the above described case that you run cronguard as a "real" daemon under /etc/init.d/ you may want to know or get informed if             cronguard is not running(anymore) 
-  - usage: ./check_daemon.sh cronguard
+  - usage:
+  ```
+  ./check_daemon.sh cronguard
+  ```
   - useful hint: this script works with every daemon/service located under /etc/init.d/
