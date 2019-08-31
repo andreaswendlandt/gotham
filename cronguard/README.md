@@ -16,7 +16,8 @@ or
      ```
      ./cron_wrapper.sh "your_script" or ./cron_wrapper.sh "command"
      ```
-    1.2 required file
+     
+   1.2 required file
     - url.inc.sh - in that file is the url to the cronguard server, cron_wrapper.sh expects it in the direcory /opt/cronguard
 
 2. server
