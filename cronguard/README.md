@@ -12,11 +12,14 @@
     ```
     ./cron_wrapper.sh "command1 | command2 | command3" 
     ```
-or 
+
+or
+
     ```
     ./cron_wrapper.sh "your_script"
     ``` 
-or  ```
+or  
+    ```
     ./cron_wrapper.sh "command"
     ```
      
