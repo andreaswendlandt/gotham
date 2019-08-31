@@ -106,7 +106,9 @@
     - status will print out the state of cronguard, either it is running or not
 
     3.3 best practice
-    - copy the script to /etc/init.d/cronguard, now it can be treated the "nix" fashion way like                                 ```/etc/init.d/cronguard start | stop | restart | status```
+    - copy the script to /etc/init.d/cronguard, now it can be treated the "nix" fashion way like
+    
+    ```/etc/init.d/cronguard start | stop | restart | status```
     - one step further - activate the daemon so it will start and stop with the system:
     ```
     update-rc.d cronguard defaults
