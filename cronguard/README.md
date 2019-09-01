@@ -26,8 +26,8 @@
 
 2. server
 
-    2.1 database (mysql server)
-    - dependency,the following packages must be installed:
+    2.1 database
+    - dependency, a running mysql or mariadb server, as an example for mysql the following packages must be installed:
       - libmysqlclient20:amd64
       - mysql-client-5.7
       - mysql-client-core-5.7
