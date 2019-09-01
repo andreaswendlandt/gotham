@@ -1,5 +1,5 @@
 # CRONGUARD
-## ensure that your cronjobs finish succesfully or get notified via mail if they don't
+## ensure that your cronjobs finish successfully or get notified via mail if they don't
 ###### this application consists of 3 parts, at the client side the client wrapper script cron_wrapper.sh, at the server side the cronguard daemon   and the cronguard.php script - therefor a running web- and database server is required 
 
 1. client
