@@ -6,6 +6,7 @@ wget https://raw.githubusercontent.com/andreaswendlandt/gotham/master/cronguard/
 dpkg -i cronguard-server_1.0-1.deb
 ```
 - it copies the script cronguard.php and the file db.inc.php to /var/www/html
+- it creates the database cronguard, the mysql user cronguard and the table jobs
 
 ## download and install cronguard-wrapper
 ```
