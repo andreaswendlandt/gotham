@@ -22,6 +22,11 @@ if ps -ef | grep $((pid -1)) | grep sudo >/dev/null 2>&1; then
     sudo_pid=$((pid -1))
 fi
 
+# Logging Function
+log() {
+    echo $(date) "$@" >>$logfile
+}
+
 # Include Config Files
 if ! source /opt/cronguard/db.inc.sh 2>/dev/null; then
     log "Could not include db.inc.sh from /opt/cronguard, aborting"
@@ -32,11 +37,6 @@ if ! source /opt/cronguard/mail.inc.sh 2>/dev/null; then
     log "Could not include mail.inc.sh from /opt/cronguard, aborting"
     exit 1
 fi
-
-# Logging Function
-log() {
-    echo $(date) "$@" >>$logfile
-}
 
 # Sending Mail Function
 send_mail(){
