@@ -1,7 +1,9 @@
 # CRONGUARD
-## ensure that your cronjobs finish succesfully or get notified via mail if they don't
-###### this application consists of 3 parts, at the client side the client wrapper script cron_wrapper.sh, at the server side the cronguard daemon   and the cronguard.php script - therefor a running web- and database server is required 
-
+## ensure that your cronjobs finish successfully or get notified via mail if they don't
+###### this application pulls the logic about if a cronjob succeeded or failed and the notification about failed or stuck cronjobs out of cron itself 
+it consists of 3 parts, at the client side the wrapper script cron_wrapper.sh - whatever you want to run, either a script, a command or a piped command chain, just call the script with the cronjob you want to execute, it starts a post curl with some metadata about the cronjob(start time, command, a generated token, the hostname, the action and the result) to the cronguard server, executes the cronjob and sends the result of the cronjob again to the cronguard server with a second post curl 
+on the server the script cronguard.php takes the data and writes it into a database(and provides a simple api so that you can check all entries via a browser)
+finally on the server runs the script cronguard.sh in a daemon mode, it checks once per minute if there are entries in the database and processes them - in terms of entries which have the result success it removes the entry, in case the result of a failed one it sends a mail to the configured mail address and then removes the entry, the third possibility is that a job has no result as it is still running, then it checks if the cronjob is running for longer than one day, in case it is running for longer than one day the entry will be removed and a mail will be send
 1. client
   
     1.1 cronwrapper
@@ -26,8 +28,8 @@
 
 2. server
 
-    2.1 database (mysql server)
-    - dependency,the following packages must be installed:
+    2.1 database
+    - dependency, a running mysql or mariadb server, as an example for mysql the following packages must be installed:
       - libmysqlclient20:amd64
       - mysql-client-5.7
       - mysql-client-core-5.7
