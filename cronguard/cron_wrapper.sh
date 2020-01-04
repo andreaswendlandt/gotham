@@ -2,7 +2,7 @@
 # author: guerillatux
 # desc: wrapper script for cronjobs whith or without piped commands
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of a command or script
-# last modified: 11.12.2018
+# last modified: 04.01.2020
 
 if [ $# -ne 1 ]; then
     echo "This Script needs 1 Parameter, a Command-Chain"
