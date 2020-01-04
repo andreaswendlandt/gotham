@@ -18,7 +18,7 @@ fi
 
 # Include Config File
 if ! source /opt/cronguard/url.inc.sh 2>/dev/null; then
-    log "Could not include url.inc.sh from /opt/cronguard, aborting"
+    echo "Could not include url.inc.sh from /opt/cronguard, aborting"
     exit 1
 fi
 
