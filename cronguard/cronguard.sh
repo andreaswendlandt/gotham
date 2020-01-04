@@ -1,7 +1,7 @@
 #!/bin/bash
 # author: guerillatux
 # desc: Cronguard Daemon, checks and processes Database Entries, sends Mails and removes them
-# last modified: 1.12.2018
+# last modified: 04.01.2020
 
 # Quit if not called by root
 if [ "$(id -u)" -ne "0" ]; then
