@@ -24,12 +24,15 @@ or
 
 # what functions are already there and what is their purpose
 * is_int() - checking if a variable is an integer one
- - example
- `var=1234; is_int $var;echo $?`
+
+  example `var=1234; is_int $var;echo $?`
+   
   `0`
-  but
- `var=1234f; is_int $var;echo $?`
+
+  but `var=1234f; is_int $var;echo $?`
+
   `1`
+
 * is_alpha() - checking if a variable consists only of letters
  - example
  `var=abcd; is_alpha $var;echo $?`
