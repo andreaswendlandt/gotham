@@ -34,26 +34,35 @@ or
   `1`
 
 * is_alpha() - checking if a variable consists only of letters
- - example
- `var=abcd; is_alpha $var;echo $?`
+ 
+  example `var=abcd; is_alpha $var;echo $?`
+  
   `0`
-  but
-  `var=abc1; is_alpha $var;echo $?`
-   `1`
-* is_empty() - checking if a variable is empty
- - example
- `var=""; is_empty $var;echo $?`
-  `0`
- but
- `var="foo"; is_empty $var;echo $?`
+  
+  but `var=abc1; is_alpha $var;echo $?`
+   
   `1`
-  * started_as_root() - checks if the script was started with root privileges
-   - example
-   `if started_as_root(); then echo "started as root"; else echo "this script needs root privileges"; fi`
+
+* is_empty() - checking if a variable is empty
+  
+  example `var=""; is_empty $var;echo $?`
+  
+  `0`
+ 
+   
+   but `var="foo"; is_empty $var;echo $?`
+  
+   `1`
+  
+* started_as_root() - checks if the script was started with root privileges
+   
+  example `if started_as_root(); then echo "started as root"; else echo "this script needs root privileges"; fi`
+
 * my_log() - logs whatever this function is given to to /tmp/name_of_the_script.sh.log
- - example 
-  - imagine you have a script called test.sh, within that script you call
- `my_log "script successfully finished"`
-  - this will result in /tmp/test.sh.log
- `Sa 13. Jun 23:34:03 CEST 2020 script successfully finished`
+  
+  example 
+  
+   imagine you have a script called test.sh, within that script you call `my_log "script successfully finished"`
+  
+   this will result in /tmp/test.sh.log `Sa 13. Jun 23:34:03 CEST 2020 script successfully finished`
  
