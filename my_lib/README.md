@@ -66,7 +66,7 @@ or
   
    this will result in /tmp/test.sh.log `Sa 13. Jun 23:34:03 CEST 2020 script successfully finished`
    
-* my_flock() - ensures that only one instance of your script is running, any other try to start it while antother one
-             is running will abort with this error message `ERROR, another instance of $(basename $0) is already running - aborting!!!`
+* my_flock() - ensures that only one instance of your script is running, any other try to start it while another one
+  is running will abort with this error message `ERROR, another instance of $(basename $0) is already running - aborting!!!`
  
 * config_grep()
