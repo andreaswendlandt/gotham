@@ -21,12 +21,21 @@ is_empty(){
     fi
 }
 
-# function for checking if a variable consists only of alphanumeric characters
+# function for checking if a variable consists only of letter characters
 is_alpha(){
     if [ -z "$(echo "$1" | sed -e 's/[[:alpha:]]//g')" ]; then
         return 0
     else
         return 1
+    fi
+}
+
+# function for checking if a variable has specialchars 
+is_specialchars(){
+    if [ -z "$(echo "$1" | sed -e 's/[[:alnum:]]//g')" ]; then
+        return 1
+    else
+        return 0
     fi
 }
 
