@@ -31,7 +31,7 @@ is_alpha(){
 }
 
 # function for checking if a variable has specialchars 
-is_specialchars(){
+has_specialchars(){
     if [ -z "$(echo "$1" | sed -e 's/[[:alnum:]]//g')" ]; then
         return 1
     else
