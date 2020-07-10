@@ -25,34 +25,44 @@ or
 # what functions are already there and what is their purpose
 * is_int() - checking if a variable is an integer one
 
-  example `var=1234; is_int $var;echo $?`
+  example `var=1234; is_int $var; echo $?`
    
   `0`
 
-  but `var=1234f; is_int $var;echo $?`
+  but `var=1234f; is_int $var; echo $?`
 
   `1`
 
 * is_alpha() - checking if a variable consists only of letters
  
-  example `var=abcd; is_alpha $var;echo $?`
+  example `var=abcd; is_alpha $var; echo $?`
   
   `0`
   
-  but `var=abc1; is_alpha $var;echo $?`
+  but `var=abc1; is_alpha $var; echo $?`
    
   `1`
 
 * is_empty() - checking if a variable is empty
   
-  example `var=""; is_empty $var;echo $?`
+  example `var=""; is_empty $var; echo $?`
   
   `0`
  
    
-   but `var="foo"; is_empty $var;echo $?`
+   but `var="foo"; is_empty $var; echo $?`
   
    `1`
+   
+* has_specialchars() - checks if a variable contains specialchars
+  
+  example `var="foo%"; has_specialchars $var; echo $?`
+  
+  `0`
+
+   but `var="foo"; has_specialchars $var; echo $?`
+
+  `1`
   
 * started_as_root() - checks if the script was started with root privileges
    
