@@ -1,7 +1,6 @@
 ## this "library" is a little collection of functions that can be used again and again in shell scripts
 ## author: andreaswendlandt
-## last modified: 7.6.2020
-
+## last modified: 10.7.2020
 
 # function for checking if a variable is an integer one
 is_int(){
@@ -36,6 +35,15 @@ has_specialchars(){
         return 1
     else
         return 0
+    fi
+}
+
+# function for checking if a variable consists only of integers and dots(like most versions)
+is_version(){
+    if [ -z "$(echo "$1" | sed -e 's/[[:digit:]]\|\.//g')" ]; then
+        return 0
+    else
+        return 1
     fi
 }
 
