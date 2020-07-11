@@ -81,3 +81,13 @@ or
  
 * config_grep() - help function for grepping in files, what if you grep in a file for a search pattern (usually in an 
   if statement) you get a match and the line of the match is outcommented, can it be that the logic of your if statement is     inverted? you can avoid that behaviour with using config_grep(), it has 3 possible return values, "no occurence" - your       search pattern does not exist in the file your are grepping in "outcommented" - the search pattern does exist in the file     you are grepping in but the line is outcommented and "match" - your search pattern does exist in the file you are grepping   in and the line where it appears does not start with either a "#" or a ";" usage: `config_grep <file> <search_pattern>`
+  
+* is_version() - checks if a variable consists only of numbers and dots(just like most version strings are)
+
+  example `var="1.2.3.4"; is_version $var; echo $?`
+
+  `0`
+  
+  but `var="1.2.3.4foo"; is_version $var; echo $?`
+  
+  `1`
