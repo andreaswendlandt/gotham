@@ -91,3 +91,13 @@ or
   but `var="1.2.3.4foo"; is_version $var; echo $?`
   
   `1`
+
+* is_ipv4() - checks if a variable is a valid ipv4 address
+
+  example `var="192.168.2.1"; is_ipv4 $var; echo $?`
+  
+  `0`
+  
+  but `var="192.168.2.256"; is_ipv4 $var; echo $?`
+  
+  `1`
