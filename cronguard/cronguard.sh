@@ -1,7 +1,7 @@
 #!/bin/bash
 # author: guerillatux
 # desc: Cronguard Daemon, checks and processes Database Entries, sends Mails and removes them
-# last modified: 04.01.2020
+# last modified: 07.08.2020
 
 # Quit if not called by root
 if [ "$(id -u)" -ne "0" ]; then
@@ -68,8 +68,12 @@ stop_cronguard() {
     init_pid=$(ps -ef | grep cronguard | grep -v grep | awk '$3 ~ /1/ {print $2}')
     echo "$init_pid" > "$init_pidfile"
     if [ -s $pidfile ]; then
-        kill -15 $(cat "$pidfile") >/dev/null 2>&1
-	kill -15 $(cat "$init_pidfile") >/dev/null 2>&1
+        pidfile_content=$(cat "$pidfile")
+        init_pidfile_content=$(cat "$init_pidfile")
+        rm -rf $pidfile >/dev/null 2>&1
+        rm -rf $init_pidfile >/dev/null 2>&1
+        kill -15 $(echo "$pidfile_content") >/dev/null 2>&1
+        kill -15 $(echo "$init_pidfile_content") >/dev/null 2>&1
     else
         echo "Error: Can not stop $daemon because $pidfile is empty, please check manually!"
         log "Error: Can not stop $daemon because $pidfile is empty, please check manually!"

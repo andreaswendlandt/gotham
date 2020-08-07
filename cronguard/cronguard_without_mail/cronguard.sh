@@ -62,8 +62,12 @@ stop_cronguard() {
     init_pid=$(ps -ef | grep cronguard | grep -v grep | awk '$3 ~ /1/ {print $2}')
     echo "$init_pid" > "$init_pidfile"
     if [ -s $pidfile ]; then
-        kill -15 $(cat "$pidfile") >/dev/null 2>&1
-	kill -15 $(cat "$init_pidfile") >/dev/null 2>&1
+        pidfile_content=$(cat "$pidfile")
+        init_pidfile_content=$(cat "$init_pidfile")
+        rm -rf $pidfile >/dev/null 2>&1
+        rm -rf $init_pidfile >/dev/null 2>&1
+        kill -15 $(echo "$pidfile_content") >/dev/null 2>&1
+        kill -15 $(echo "$init_pidfile_content") >/dev/null 2>&1
     else
         echo "Error: Can not stop $daemon because $pidfile is empty, please check manually!"
         log "Error: Can not stop $daemon because $pidfile is empty, please check manually!"
