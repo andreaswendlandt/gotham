@@ -100,7 +100,7 @@ restart_cronguard() {
 # Checking Cronguard Function
 check_cronguard() {
     if [ -z "$sudo_pid" ]; then
-        if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid" > /dev/null 2>&1; then
+        if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid|mysql|cronguard.log" > /dev/null 2>&1; then
             # Daemon is running
             return 1
         else
@@ -108,7 +108,7 @@ check_cronguard() {
             return 0
         fi
     else
-        if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid|$sudo_pid" > /dev/null 2>&1; then
+        if ! [ -z "$oldpid" ] && ps -ef | grep "$daemon" | egrep -v "grep|$pid|$sudo_pid|mysql|cronguard.log" > /dev/null 2>&1; then
             # Daemon is running
             return 1
 	else
