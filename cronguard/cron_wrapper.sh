@@ -2,7 +2,7 @@
 # author: guerillatux
 # desc: wrapper script for cronjobs whith or without piped commands
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of a command or script
-# last modified: 04.01.2020
+# last modified: 21.12.2020
 
 if [ $# -ne 1 ]; then
     echo "This Script needs 1 Parameter, a Command-Chain"
@@ -12,14 +12,12 @@ fi
 
 # Check that curl is present on the system
 if ! which curl >/dev/null; then
-    echo "Error, curl is missing on this system!"
-    exit 1
+    echo "Error, curl is missing on this system, the cronjob will be executed but the cronguard server will not be contacted"
 fi
 
-# Include Config File
+# Include config File
 if ! source /opt/cronguard/url.inc.sh 2>/dev/null; then
-    echo "Could not include url.inc.sh from /opt/cronguard, aborting"
-    exit 1
+    echo "Could not include url.inc.sh from /opt/cronguard, the cronjob will be executed but the cronguard server will not be contacted"
 fi
 
 # Variables
@@ -29,24 +27,42 @@ token=$(openssl rand -hex 3)
 start_time=$(date +%s)
 action="start"
 
-# First curl, adding a new Database Entry with the Starttime
+# First curl, adding a new database entry with the starttime
 curl -X POST -F "token=$token" -F "host=$host" -F "start_time=$start_time" -F "command=$command" -F "action=$action" $url
 
-# Execute the Cron Command and save the Pipestatus in the Variable "pipe"
-eval "$command; "'pipe=${PIPESTATUS[*]}'
-set $pipe
+# execute the cron command(s) and save the pipestatus / returnvalue in the variable "pipe"
+if echo $command | grep ";">/dev/null 2>&1;then
+    commands=$(echo $command|sed -e 's/\;/\n/g')
+    i=0
+    while read subcommand; do
+        eval "$subcommand; " ; eval "pipe[$i]"=$(echo $?)
+        i=$((i+1))
+    done < <(echo "$commands")
+    set ${pipe[*]}
+    j=1
+    error=
+    for a in $*; do
+        if [ $a -ne 0 ]; then
+            error="$error $j.command"
+        fi
+        j=$((j+1))
+    done
+else
+    eval "$command; "'pipe=${PIPESTATUS[*]}'
+    set $pipe
+fi
 
-# Checking the Array for Errors
+# Checking the Array for errors
 j=1
 error=
-for i in $*; do
-    if [ $i -ne 0 ]; then
+for a in $*; do
+    if [ $a -ne 0 ]; then
         error="$error $j.command"
     fi
     j=$((j+1))
 done
 
-# Defining the Result for the next Curl and Database Entry
+# Defining the result for the next curl and database entry
 result=
 if [ -z "$error" ]; then
     result="success"
@@ -54,7 +70,7 @@ else
     result="fail"
 fi
 
-# Define the Endtime and make the second Curl, modify the above Database Entry
+# Define the endtime and make the second curl, modify the above database entry
 action="finished"
 end_time=$(date +%s)
 curl -X POST -F "token=$token" -F "action=$action" -F "end_time=$end_time" -F "result=$result" $url
