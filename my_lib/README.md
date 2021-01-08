@@ -101,3 +101,13 @@ or
   but `var="192.168.2.256"; is_ipv4 $var; echo $?`
   
   `1`
+
+* is_float() - checking if a variable is a float one
+
+  example `var=1.2; is_float $var; echo $?`
+
+  `0`
+
+  but `var=1,2; is_float $var; echo $?`
+
+  `1`
