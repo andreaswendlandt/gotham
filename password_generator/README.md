@@ -1,4 +1,4 @@
-#Passwordgenerator
+# Passwordgenerator
 ## that script generates a random password string that consists of upper case letters, lower case letters, special characters and numbers
 you call the script with a number as a parameter:
 ```
