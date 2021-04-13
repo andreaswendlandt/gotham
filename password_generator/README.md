@@ -28,3 +28,5 @@ your password:
 J2h*b2+W
 ```
 
+### How it works
+first a basic password is created from the above 4 character classes(8 chars), then it is checked if a numeric parameter greater than 8 was passed, if yes an additional password string is created from random characters again from the above 4 character classes, the number of characters of the additional password string results from the difference of the passed parameter to 8
