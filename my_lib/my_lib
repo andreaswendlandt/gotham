@@ -1,10 +1,11 @@
 ## this "library" is a little collection of functions that can be used again and again in shell scripts
 ## author: andreaswendlandt
-## last modified: 08.01.2021
+## last modified: 24.01.2022
 
 # function for checking if a variable is an integer one
+
 is_int(){
-    if [ -z "$(echo "$1" | sed -e 's/[[:digit:]]//g')" ]; then
+    if [[ "${1}" =~ ^[[:digit:]]+$ ]]; then
         return 0
     else
         return 1
@@ -13,7 +14,7 @@ is_int(){
 
 # function for checking if a variable is empty
 is_empty(){
-    if [ -z "$1" ]; then
+    if [[ -z "${1}" ]]; then
         return 0
     else
         return 1
@@ -22,7 +23,7 @@ is_empty(){
 
 # function for checking if a variable consists only of letter characters
 is_alpha(){
-    if [ -z "$(echo "$1" | sed -e 's/[[:alpha:]]//g')" ]; then
+    if [[ -z "$(echo "${1}" | sed -e 's/[[:alpha:]]//g')" ]]; then
         return 0
     else
         return 1
@@ -31,7 +32,7 @@ is_alpha(){
 
 # function for checking if a variable has specialchars 
 has_specialchars(){
-    if [ -z "$(echo "$1" | sed -e 's/[[:alnum:]]//g')" ]; then
+    if [[ -z "$(echo "${1}" | sed -e 's/[[:alnum:]]//g')" ]]; then
         return 1
     else
         return 0
@@ -40,7 +41,7 @@ has_specialchars(){
 
 # function for checking if a variable consists only of integers and dots(like most versions)
 is_version(){
-    if [ -z "$(echo "$1" | sed -e 's/[[:digit:]]\|\.//g')" ]; then
+    if [[ -z "$(echo "${1}" | sed -e 's/[[:digit:]]\|\.//g')" ]]; then
         return 0
     else
         return 1
@@ -71,26 +72,26 @@ my_flock(){
 # your search pattern was not found - you get a "no occurence" or and that is different to the regular grep
 # you get an "outcommented" if the line of the match starts with a '#' or a ';'
 config_grep(){
-    if [ $# -ne 2 ]; then
+    if [[ $# -ne 2 ]]; then
         echo "error: 2 parameters are needed for ${FUNCNAME}"
         echo "USAGE: ${FUNCNAME} 'search pattern' 'search file'"
         return 1
     fi
-    if [ -f $2 ]; then
-        result=$(grep -i $1 $2 2>/dev/null | awk '{if (substr($1,1,1) ~ /#|;/) {print "outcommented"} else {print "match"}}')
-        if [ -z $result ]; then
+    if [[ -f ${2} ]]; then
+        result=$(grep -i ${1} ${2} 2>/dev/null | awk '{if (substr($1,1,1) ~ /#|;/) {print "outcommented"} else {print "match"}}')
+        if [[ -z ${result} ]]; then
             result="no occurence"
         fi
-        echo $result
+        echo "${result}"
     else
-        echo "file \"$2\" does not exist"
+        echo "file \"${2}\" does not exist"
         return 1
     fi
 }
 
 # function for checking if the script was started with root privileges
 started_as_root(){
-    if [ $(id -u) -eq 0 ]; then
+    if [[ $(id -u) -eq 0 ]]; then
         return 0
     else
         return 1
@@ -99,7 +100,7 @@ started_as_root(){
 
 # function for checking if a variable is a valid ipv4 address
 is_ipv4(){
-    if echo "$1" | egrep -q '\b((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\b'; then
+    if echo "${1}" | egrep -q '\b((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\b'; then
         return 0
     else
         return 1
@@ -108,7 +109,7 @@ is_ipv4(){
 
 # function for checking if a variable is a float
 is_float(){
-    if [ $(echo $1 | grep -o '\.'| wc -l) -eq 1 ] && [ -z "$(echo "$1" | sed -e 's/\([[:digit:]]\|\.\)//g')" ]; then 
+    if [ $(echo "${1}" | grep -o '\.'| wc -l) -eq 1 ] && [ -z "$(echo "${1}" | sed -e 's/\([[:digit:]]\|\.\)//g')" ]; then 
         return 0
     else
         return 1
