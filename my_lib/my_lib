@@ -109,7 +109,7 @@ is_ipv4(){
 
 # function for checking if a variable is a float
 is_float(){
-    if [ $(echo "${1}" | grep -o '\.'| wc -l) -eq 1 ] && [ -z "$(echo "${1}" | sed -e 's/\([[:digit:]]\|\.\)//g')" ]; then 
+    if [[ $(echo "${1}" | grep -o '\.'| wc -l) -eq 1 ]] && [[ -z "$(echo "${1}" | sed -e 's/\([[:digit:]]\|\.\)//g')" ]]; then 
         return 0
     else
         return 1
