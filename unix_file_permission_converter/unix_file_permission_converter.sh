@@ -3,10 +3,9 @@
 # desc: this script converts a string of classic unix permissions like rwxr-xr-- into a 4 character octal one
 # last modified: 20220417
 # shellcheck disable=SC2001
-# todo: implement a check that tests the bits from the given parameter and that their position is correct (rwxr-x--- and not wrxw-r-- )
+# todo: implement a check that tests the bits from the given parameter and that their position is correct (rwxr-x--- and not wrxw-r--)
 
 if [[ $# -ne 1 ]]; then 
-    echo "Error, this script needs one parameter - a permission string"
     echo "Usage: $0 rwxr-xr-x"
     exit 1
 fi
