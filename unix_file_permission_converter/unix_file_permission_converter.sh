@@ -1,9 +1,8 @@
 #!/bin/bash
 # author: andreaswendlandt
 # desc: this script converts a string of classic unix permissions like rwxr-xr-- into a 4 character octal one
-# last modified: 20220417
+# last modified: 20220504
 # shellcheck disable=SC2001
-# todo: implement a check that tests the bits from the given parameter and that their position is correct (rwxr-x--- and not wrxw-r--)
 
 if [[ $# -ne 1 ]]; then 
     echo "Usage: $0 rwxr-xr-x"
@@ -13,14 +12,50 @@ fi
 permission_string=${1}
 
 if [[ ${#permission_string} -ne 9 ]]; then
-    echo "wrong character number of permission string"
+    echo "Wrong character number of permission string"
     exit 1
 fi
 
 if ! [[ $(echo "${permission_string}" | sed -e 's/[rwxsStT-]//g') == "" ]]; then
     echo "Illegal character in permission string"
-    exit 1
+    exit 3
 fi
+
+check_position(){
+    if [[ $1 == *"$2"* ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+j=1
+for i in {0..8}; do
+    if [[ $i == 0 ]] || [[ $i == 3 ]] || [[ $i == 6 ]]; then
+        if ! check_position r- "${permission_string:i:1}"; then
+            wrong_char="$j.position (${permission_string:i:1})"
+        fi
+    elif [[ $i == 1 ]] || [[ $i == 4 ]] || [[ $i == 7 ]]; then
+        if ! check_position w- "${permission_string:i:1}"; then
+            wrong_char="${wrong_char} $j.position (${permission_string:i:1})"
+        fi
+    elif [[ $i == 2 ]] || [[ $i == 5 ]]; then
+        if ! check_position x-sS "${permission_string:i:1}"; then
+            wrong_char="${wrong_char} $j.position (${permission_string:i:1})"
+        fi
+    elif [[ $i == 8 ]]; then
+        if ! check_position x-tT "${permission_string:i:1}"; then
+            wrong_char="${wrong_char} $j.position (${permission_string:i:1})"
+        fi
+    fi
+    j=$((j+1))
+done
+
+if [[ -n $wrong_char ]]; then
+    echo "wrong character: $wrong_char!"
+    exit 5
+fi
+
 
 if [[ ${permission_string} =~ [sStT] ]]; then
     i=1
