@@ -27,5 +27,10 @@ pipeline {
                 sh "shellcheck unix_file_permission_converter/*.sh"
             }
         }
+        stage('Shellcheck my_lib') {
+            steps {
+                sh "shellcheck my_lib/my_lib"
+            }
+        }
     }
 }
