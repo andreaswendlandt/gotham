@@ -1,7 +1,7 @@
 #!/bin/bash
 ## this "library" is a little collection of functions that can be used again and again in shell scripts
 ## author: andreaswendlandt
-## last modified: 20.05.2022
+## last modified: 21.05.2022
 
 # function for checking if a variable is an integer one
 
@@ -42,7 +42,8 @@ has_specialchars(){
 
 # function for checking if a variable consists only of integers and dots(like most versions)
 is_version(){
-    if [[ -z "$(echo "${1}" | sed -e 's/[[:digit:]]\|\.//g')" ]]; then
+    no_digits="${1//[[:digit:]]/}"
+    if [[ -z "${no_digits//./}" ]]; then
         return 0
     else
         return 1
@@ -50,23 +51,23 @@ is_version(){
 }
 
 # logging function - logs to /tmp/<script-name.log>
-my_logfile=/tmp/$(basename "$0").log
+my_logfile=/tmp/$(basename "${0}").log
 my_log() {
-    echo "$(date)" "$@" >>$my_logfile
+    echo "$(date)" "$@" >> "${my_logfile}"
 }
 
 # flock - ensure that only one instance of your script is running
 # if you try to run your script while antother one is running it will abort
 lock_err(){
-    echo "ERROR, another instance of $(basename $0) is already running - aborting!!!"
+    echo "ERROR, another instance of $(basename "${0}") is already running - aborting!!!"
     exit 1
 }
 my_flock(){
-    pidfile="/tmp/$(basename $0).pid"
-    exec 300>$pidfile
+    pidfile="/tmp/$(basename "${0}").pid"
+    exec 300>"${pidfile}"
     flock -n 300 ||  lock_err 
     pid=$$
-    echo $pid 1>&300
+    echo "${pid}" 1>&300
 }
 
 # 'config grep' - grep in files, get 3 possible return values, your search pattern was found - you get a "match"
@@ -79,7 +80,7 @@ config_grep(){
         return 1
     fi
     if [[ -f ${2} ]]; then
-        result=$(grep -i ${1} ${2} 2>/dev/null | awk '{if (substr($1,1,1) ~ /#|;/) {print "outcommented"} else {print "match"}}')
+        result=$(grep -i "${1}" "${2}" 2>/dev/null | awk '{if (substr($1,1,1) ~ /#|;/) {print "outcommented"} else {print "match"}}')
         if [[ -z ${result} ]]; then
             result="no occurence"
         fi
@@ -110,8 +111,13 @@ is_ipv4(){
 
 # function for checking if a variable is a float
 is_float(){
-    if [[ $(echo "${1}" | grep -o '\.'| wc -l) -eq 1 ]] && [[ -z "$(echo "${1}" | sed -e 's/\([[:digit:]]\|\.\)//g')" ]]; then 
-        return 0
+    if [[ $(echo "${1}" | grep -o '\.'| wc -l) -eq 1 ]]; then
+        no_digits="${1//[[:digit:]]/}"
+        if [[ -z "${no_digits//./}" ]]; then
+            return 0
+        else
+            return 1
+        fi
     else
         return 1
     fi
