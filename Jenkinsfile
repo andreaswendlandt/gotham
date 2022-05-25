@@ -32,5 +32,10 @@ pipeline {
                 sh "shellcheck my_lib/my_lib"
             }
         }
+        stage('Shellcheck password_generator') {
+            steps {
+                sh "shellcheck password_generator/password_generator.sh"
+            }
+        }
     }
 }
