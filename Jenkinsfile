@@ -22,7 +22,7 @@ pipeline {
                 sh "git pull origin master"
             }
         }
-        stage('Shellcheck the project unix_file_permission_converter') {
+        stage('Shellcheck unix_file_permission_converter') {
             steps {
                 sh "shellcheck unix_file_permission_converter/*.sh"
             }
@@ -35,6 +35,11 @@ pipeline {
         stage('Shellcheck password_generator') {
             steps {
                 sh "shellcheck password_generator/password_generator.sh"
+            }
+        }
+        stage('Shellcheck vulnerability_scanner') {
+            steps {
+                sh "shellcheck vulnerability_scanner/vulnerability.sh"
             }
         }
     }
