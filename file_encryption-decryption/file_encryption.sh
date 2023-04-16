@@ -38,15 +38,15 @@ elif [[ ${encrypt} == false ]] && [[ ${decrypt} == false ]]; then
 else
     if [[ ${encrypt} == true ]]; then
         output_file="${input_file}.enc"
-        command="openssl enc -${option} -aes256 -pbkdf2 -in "${input_file}" -out "${output_file}""
+        command="openssl enc -e -aes256 -pbkdf2 -in ${input_file} -out ${output_file}"
     elif [[ ${decrypt} == true  ]]; then
         decrypted_file=${input_file%.*}
-        command="openssl enc -d -aes256 -pbkdf2 -in "${input_file}" -out "${decrypted_file}" 2>/dev/null && rm ${input_file}"
+        command="openssl enc -d -aes256 -pbkdf2 -in ${input_file} -out ${decrypted_file} 2>/dev/null && rm ${input_file}"
     fi
 fi
 
 if eval "${command}"; then
     rm "${input_file}" >/dev/null 2>&1
 else
-    rm ${decrypted_file} >/dev/null 2>&1
+    rm "${decrypted_file}" >/dev/null 2>&1
 fi
