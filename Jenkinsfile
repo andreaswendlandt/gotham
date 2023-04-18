@@ -42,5 +42,12 @@ pipeline {
                 sh "shellcheck vulnerability_scanner/vulnerability.sh"
             }
         }
+        stage('Shellcheck file encryption/decryption scripts') {
+            steps {
+                sh "shellcheck file_encryption-decryption/encrypt.sh"
+                sh "shellcheck file_encryption-decryption/decrypt.sh"
+                sh "shellcheck file_encryption-decryption/file_encryption.sh"
+            }
+        }
     }
 }
