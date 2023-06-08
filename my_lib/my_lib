@@ -122,3 +122,23 @@ is_float(){
         return 1
     fi
 }
+
+# function for checking for lower letters in a string
+has_lower_letter(){
+    no_lower="${1//[[:lower:]]/}"
+    if [[ "${1}" == "${no_lower}" ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+# function for checking for upper letters in a string
+has_upper_letter(){
+    no_upper="${1//[[:upper:]]/}"
+    if [[ "${1}" == "${no_upper}" ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
