@@ -142,3 +142,11 @@ has_upper_letter(){
         return 0
     fi
 }
+
+has_int(){
+    if [[ "${1}" =~ [[:digit:]] ]]; then
+        return 0
+    else
+        return 1
+fi
+}
