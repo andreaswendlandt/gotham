@@ -111,3 +111,33 @@ or
   but `var=1,2; is_float $var; echo $?`
 
   `1`
+
+* has_lower_letter() - checking for lower letters in a string
+
+  example `var=aH53K; has_lower_letter $var; echo $?`
+
+ `0`
+
+  but `var=AH53K; has_lower_letter $var; echo $?`
+
+ `1`
+
+* has_upper_letter() - checking for upper letters in a string
+
+  example `var=Ah53k; has_upper_letter $var; echo $?`
+
+  `0`
+
+  but `var=ah53k; has_upper_letter $var; echo $?`
+
+  `1`
+
+* has_int() - checking for integers in a string
+
+  example - `var=ah53k; has_int $var; echo $?`
+
+  `0`
+
+  but `var=ahebk; has_int $var; echo $?`
+
+  `1`
