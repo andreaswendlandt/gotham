@@ -116,11 +116,11 @@ or
 
   example `var=aH53K; has_lower_letter $var; echo $?`
 
- `0`
+  `0`
 
   but `var=AH53K; has_lower_letter $var; echo $?`
 
- `1`
+  `1`
 
 * has_upper_letter() - checking for upper letters in a string
 
