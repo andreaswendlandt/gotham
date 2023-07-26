@@ -143,10 +143,28 @@ has_upper_letter(){
     fi
 }
 
+# function for checking for integers in a string
 has_int(){
     if [[ "${1}" =~ [[:digit:]] ]]; then
         return 0
     else
         return 1
 fi
+}
+
+# color output
+echo_red(){
+        echo -e "$(tput setaf 1)$*"
+}
+
+echo_green(){
+        echo -e "$(tput setaf 2)$*"
+}
+
+echo_yellow(){
+        echo -e "$(tput setaf 3)$*"
+}
+
+echo_blue(){
+        echo -e "$(tput setaf 4)$*"
 }
