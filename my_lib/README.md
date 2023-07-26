@@ -141,3 +141,5 @@ or
   but `var=ahebk; has_int $var; echo $?`
 
   `1`
+
+* echo_(red|green|yellow|blue) - print a given string in the specific color
