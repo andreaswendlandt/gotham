@@ -49,5 +49,10 @@ pipeline {
                 sh "shellcheck file_encryption-decryption/file_encryption.sh"
             }
         }
+        stage('Shellcheck password_quality') {
+            steps {
+                sh "shellcheck -x password_quality/password_quality.sh"
+            }
+        }
     }
 }
