@@ -51,7 +51,7 @@ pipeline {
         }
         stage('Shellcheck password_quality') {
             steps {
-                sh "shellcheck -x password_quality/password_quality.sh"
+                sh "cd password_quality; shellcheck -x password_quality.sh"
             }
         }
     }
