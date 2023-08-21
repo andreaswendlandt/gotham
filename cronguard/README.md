@@ -58,7 +58,7 @@ finally on the server runs the script cronguard.sh in a daemon mode, it checks o
     CREATE TABLE jobs ( jobid INT NOT NULL AUTO_INCREMENT, token CHAR(6), host VARCHAR(50), start_time BIGINT, end_time BIGINT, command VARCHAR(300), action VARCHAR(8), result VARCHAR(7), PRIMARY KEY (jobid) ) ENGINE MyISAM;
     ```
     ```
-    GRANT ALL PRIVILEGES ON cronguard.* TO 'cronguard'@'localhost' identified by 'cronguard'
+    GRANT ALL PRIVILEGES ON cronguard.* TO 'cronguard'@'localhost' identified by 'cronguard';
     ```
 
     2.2 webserver + php
