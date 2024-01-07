@@ -56,10 +56,10 @@ if ($action == 'start') {
     VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $token, $host, $start_time, $command, $action);
     if ($stmt->execute() === TRUE){
-        echo "New record created successfully";
+        echo "New record created successfully\n";
     }
     else {
-        echo "Error with creating a new record";
+        echo "Error with creating a new record\n";
     }
     $stmt->close();
 }
@@ -75,10 +75,10 @@ elseif ($action == "finished") {
     $stmt = $conn->prepare("UPDATE jobs SET end_time = ?, action = ?, result = ? WHERE token = ?");
     $stmt->bind_param("isss", $end_time, $action, $result, $token);
     if ($stmt->execute() === TRUE){
-        echo "Record updated successfully";
+        echo "Record updated successfully\n";
     }
     else {
-        echo "Error with updating the record";
+        echo "Error with updating the record\n";
     }
     $stmt->close();
 }
