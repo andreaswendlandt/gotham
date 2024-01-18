@@ -1,5 +1,5 @@
 #!/bin/bash
-# author: guerillatux
+# author: andreaswendlandt
 # desc: Cronguard Daemon, checks and processes Database Entries, sends Mails and removes them
 # last modified: 29.07.2020
 
