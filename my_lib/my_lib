@@ -168,3 +168,12 @@ echo_yellow(){
 echo_blue(){
         echo -e "$(tput setaf 4)$*"
 }
+
+# check if a branch has a remote
+check_remote_branch(){
+    if git ls-remote --exit-code --heads origin refs/heads/"${1}" >/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}

@@ -143,3 +143,12 @@ or
   `1`
 
 * echo_(red|green|yellow|blue) - print a given string in the specific color
+
+* check_remote_branch() - check if a branch has a remote
+  example - `check_remote_branch 'remote_branch'; echo $?`
+
+  `0`
+
+  but `check_remote_branch 'local_branch'; echo $?`
+
+  `1`
