@@ -42,6 +42,11 @@ pipeline {
                 sh "shellcheck vulnerability_scanner/vulnerability.sh"
             }
         }
+        stage('Shellcheck remove_old_branches.sh') {
+            steps {
+                sh "shellcheck git_branches/remove_old_branches.sh"
+            }
+        }
         stage('Shellcheck file encryption/decryption scripts') {
             steps {
                 sh "shellcheck file_encryption-decryption/encrypt.sh"
