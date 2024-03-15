@@ -1,0 +1,35 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+    stages {
+        stage('cleanup'){
+            steps{
+                deleteDir()
+                dir("${workspace}@tmp"){
+                    deleteDir()
+                }
+            }
+        }
+        stage('debug'){
+            steps{
+                sh 'printenv'
+            }
+        }
+        stage('SCM: checkout'){
+            steps{
+                checkout scm
+                git url: 'https://github.com/andreaswendlandt/gotham.git'
+                sh "git pull origin 20240315_build_packages_with_jenkins"
+            }
+        }
+        stage('Build') {
+            steps {
+                sh """
+                   #!/usr/bin/env bash
+                   version=`grep 'Version:' packages/${application}/DEBIAN/control | cut -d" " -f2`
+                   dpkg-deb --build packages/${application}/ packages/${application}_\${version}.deb
+                """
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+#!/bin/bash
+if ! netstat -tnlp | egrep ':80|:443' >/dev/null; then 
+    echo "it seems no webserver is running, keep in mind that cronguard will not work without one..."
+fi
+
+if ! netstat -tnlp | egrep ':3306|:3307' >/dev/null; then
+    echo "it seems no database server is running, the creation of the necessary database, table and user will fail,"
+    echo "please do that manually according to the following documentation:"
+    echo "https://github.com/andreaswendlandt/gotham/tree/master/cronguard"
+fi
+
+read -s -p "Please type in the mysql root password: " mysql_root_pw
+
+if mysql -u root -p${mysql_root_pw} -e "create database if not exists cronguard">/dev/null 2>&1; then
+    echo -e "\ndatabase cronguard created"
+else
+    echo "could not create database cronguard"
+fi
+
+if mysql -u root -p${mysql_root_pw} -e "grant all privileges on cronguard.* to 'cronguard'@'localhost' identified by 'cronguard'" >/dev/null 2>&1; then
+    echo "user cronguard created"
+else
+    echo "could not create user cronguard"
+fi    
+
+if mysql -u root -p${mysql_root_pw} -e "use cronguard; CREATE TABLE if not exists jobs ( jobid INT NOT NULL AUTO_INCREMENT, token CHAR(6), host VARCHAR(50), start_time BIGINT, end_time BIGINT, command VARCHAR(300), action VARCHAR(8), result VARCHAR(7), PRIMARY KEY (jobid) ) ENGINE MyISAM" >/dev/null 2>&1; then
+    echo "table jobs created"
+else
+    echo "could not create table jobs"
+fi
