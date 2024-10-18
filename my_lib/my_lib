@@ -177,3 +177,21 @@ check_remote_branch(){
         return 1
     fi
 }
+
+# check if a folder contains files
+check_folder_contains_files(){
+    if find "${1}" -maxdepth 1 -type f | read -r; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# check if a folder contains other folders
+check_folder_contains_folders(){
+    if ls -l "${1}" | grep -q '^d'; then
+        return 0
+    else
+        return 1
+    fi
+}
