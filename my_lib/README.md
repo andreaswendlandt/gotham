@@ -152,3 +152,21 @@ or
   but `check_remote_branch 'local_branch'; echo $?`
 
   `1`
+
+* check_folder_contains_files() - check if a folder has files
+  example - `check_folder_contains_files dir/file`
+
+  `0`
+
+  but `check_folder_contains_files dir/folder`
+
+  `1`
+
+* check_folder_contains_folders() - check if a folder has folders
+  example - `check_folder_contains_folders dir/folder`
+
+  `0`
+
+  but `check_folder_contains_folders dir/file`
+
+  `1`
