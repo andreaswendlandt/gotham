@@ -1,15 +1,15 @@
 #!/bin/bash
 # author: andreas wendlandt
 # desc: script to encrypt or decrypt a file with a self chosen password
-# last modified: 20230416
+# last modified: 20241124
 
 print_help(){
     echo "error: something went wrong with the parameters and options"
     echo "you need to pass either -e for encrypting or -d for decrypting and -i <filename> for the input file"
-    echo "example: $0 -e -i password"
+    echo "example: $0 -e -i filename"
     echo "this would encrypt the content of password, save it in password.enc and remove the source file password"
     echo "or"
-    echo "example: $0 -d -i password.enc"
+    echo "example: $0 -d -i filename.enc"
     echo "this would decrypt the encrypted file password.enc and save it in password and remove the file password.enc"
     exit 1
 }
