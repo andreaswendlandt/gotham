@@ -189,9 +189,16 @@ check_folder_contains_files(){
 
 # check if a folder contains other folders
 check_folder_contains_folders(){
-    if ls -l "${1}" | grep -q '^d'; then
-        return 0
-    else
+    dir=
+    for file in "${1}"/* ; do
+        if [[ -d ${file} ]]; then
+            dir="true"
+            break
+        fi
+    done
+    if [[ -z ${dir} ]]; then
         return 1
+    else
+        return 0
     fi
 }
