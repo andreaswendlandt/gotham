@@ -170,3 +170,23 @@ or
   but `check_folder_contains_folders dir/file`
 
   `1`
+
+* update_all_repos() - update all git repos
+
+  ```
+  update_all_repos /path/to/git
+  git/arkham/
+  Bereits aktuell.
+  git/docker/
+  Bereits aktuell.
+  git/fun/
+  Bereits aktuell.
+  git/ansible/
+  Bereits aktuell.
+  git/kubernetes/
+  Bereits aktuell.
+  git/sysadmin_everyday_tools/
+  Bereits aktuell.
+  git/gotham/
+  Bereits aktuell.
+  ```
