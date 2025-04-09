@@ -2,7 +2,7 @@
 # author: andreas wendlandt
 # desc: wrapper script for cronjobs
 # desc: it notifies the cronguard server via curl about the start-/endtime and the result of a command or script
-# last modified: 29.01.2024
+# last modified: 20250409
 # shellcheck disable=SC2048
 
 if [ ${#} -ne 1 ]; then
@@ -25,7 +25,7 @@ if ! which curl >/dev/null; then
 fi
 
 # include config File
-if ! source url.inc.sh 2>/dev/null; then
+if ! source /opt/cronguard/url.inc.sh 2>/dev/null; then
     echo "could not include url.inc.sh from /opt/cronguard, the cronjob will be executed but the cronguard server will not be contacted"
 fi
 
