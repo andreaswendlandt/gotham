@@ -1,0 +1,12 @@
+Package: cronguard-wrapper
+Version: 1.0-1
+Section: misc
+Priority: extra
+Architecture: all
+Depends: curl
+Installed-Size: 16
+Maintainer: Andreas Wendlandt <andreaswendlandt.79@googlemail.com>
+Description: wrapper script for cronjobs 
+ the wrapper script notifies the cronguard server via curl about the start-/endtime 
+ and the result of a command or script
+

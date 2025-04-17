@@ -1,0 +1,10 @@
+Package: cronguard-daemon
+Version: 1.0-1
+Section: misc
+Priority: extra
+Architecture: all
+Installed-Size: 24
+Maintainer: Andreas Wendlandt <andreaswendlandt.79@googlemail.com>
+Homepage: http://guerillatux.blogspot.com/
+Description: cronguard daemon
+ all files and scripts that are needed for running the cronguard daemon

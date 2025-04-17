@@ -1,0 +1,9 @@
+Package: cronguard-server
+Version: 1.0-1
+Section: misc
+Priority: extra
+Architecture: all
+Installed-Size: 24
+Maintainer: Andreas Wendlandt <andreaswendlandt.79@googlemail.com>
+Description: cronguard server
+ all files and scripts that are needed for running the cronguard server
