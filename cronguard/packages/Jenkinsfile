@@ -22,11 +22,6 @@ pipeline {
                 sh "git pull origin master"
             }
         }
-        //#stage('Shellcheck unix_file_permission_converter') {
-        //   steps {
-        //       sh "shellcheck unix_file_permission_converter/*.sh"
-        //   }
-        // }
         stage('install cronguard wrapper') {
             steps {
                 sh "dpkg -i cronguard/packages/cronguard-wrapper_1.0-1.deb"
@@ -35,6 +30,11 @@ pipeline {
         stage('install cronguard daemon') {
             steps {
                 sh "dpkg -i cronguard/packages/cronguard-daemon_1.0-1.deb"
+            }
+        }
+        stage('install cronguard server') {
+            steps {
+                sh "dpkg -i cronguard/packages/cronguard-server_1.0-1.deb"
             }
         }
     }
