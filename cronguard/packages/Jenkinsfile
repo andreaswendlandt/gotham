@@ -37,9 +37,19 @@ pipeline {
                 sh "dpkg -i cronguard/packages/cronguard-server_1.0-1.deb"
             }
         }
-        stage('start cronguard daemon') {
+        stage('run a job') {
             steps {
-                sh "/opt/cronguard/cronguard.sh start"
+                sh "/opt/cronguard/cron_wrapper.sh 'sleep 2 | true'"
+            }
+        }
+        stage('run another job') {
+            steps {
+                sh "/opt/cronguard/cron_wrapper.sh 'sleep 2 | false'"
+            }
+        }
+        stage('start cron') {
+            steps {
+                sh "cron"
             }
         }
     }
