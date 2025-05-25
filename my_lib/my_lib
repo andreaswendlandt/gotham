@@ -221,3 +221,24 @@ update_all_repos(){
         fi
     done
 }
+
+# remove a search pattern/string from a certain file
+remove_pattern_from_file(){
+    if [[ "$#" -ne 2 ]]; then
+        echo "error, this function needs two parameters, a search pattern and a file"
+	echo "$0 <search_pattern> <file>"
+	return 1
+    fi
+
+    if ! [[ -f "$2" ]]; then
+        echo "error, file '$2' does not exist, aborting"
+	return 1
+    fi
+ 
+    if grep -q "$1" "$2"; then
+	sed -i "s/$1//g" "$2"
+        echo "$1 from file $2 removed"
+    else
+        echo "$1 not found in file $2"
+    fi
+}
