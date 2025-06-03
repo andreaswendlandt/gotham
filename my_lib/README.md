@@ -190,3 +190,10 @@ or
   git/gotham/
   Bereits aktuell.
   ```
+
+* remove_pattern_from_file - remove a string from a file
+  ```
+  remove_pattern_from_file foo example_file 
+  foo from file example_file removed
+  ```
+  would remove all findings of the string foo in the file exapmle_file
