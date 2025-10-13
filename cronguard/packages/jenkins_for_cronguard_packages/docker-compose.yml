@@ -1,0 +1,38 @@
+# jenkins 
+services:
+  jenkins_master:
+    build: ./master
+    privileged: true
+    user: root
+    restart: always
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: myjenkins_master
+    volumes:
+      - ./jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://jenkins_master:8080 | grep -q login"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  jenkins_slave:
+    build: ./slave
+    depends_on:
+      jenkins_master:
+        condition: service_healthy
+        restart: true
+
+    privileged: true
+    user: root
+    tty: true
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+    container_name: myjenkins_slave
+    volumes:
+      - ./jenkins_slave:/opt
