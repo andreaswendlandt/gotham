@@ -191,7 +191,7 @@ or
   Bereits aktuell.
   ```
 
-* remove_pattern_from_file - remove a string from a file
+* remove_pattern_from_file() - remove a string from a file
   ```
   remove_pattern_from_file foo example_file 
   foo from file example_file removed
