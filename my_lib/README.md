@@ -197,3 +197,19 @@ or
   foo from file example_file removed
   ```
   would remove all findings of the string foo in the file exapmle_file
+
+* version_compare() - compare a given version string with a hardcoded one(1.1.2.) in this example
+```
+version_compare 1.1.0
+1.1.0 is smaller
+```
+or
+```
+version_compare 1.1.3
+1.1.3 is greater
+```
+or in case the given version is the same
+```
+version_compare 1.1.2
+1.1.2 and 1.1.2 are the same
+``

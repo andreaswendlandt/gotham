@@ -242,3 +242,21 @@ remove_pattern_from_file(){
         echo "$1 not found in file $2"
     fi
 }
+
+# compare two version strings(with a hardcoded reference version)
+version_compare(){
+    reference_version="1.1.2"
+    if [[ "${reference_version}" == "${1}" ]]; then
+        echo "${reference_version} and ${1} are the same"
+        return 0
+    else
+        version_diff=$(echo -e "${reference_version}\n${1}" | sort -V | head -n1)
+        if [[ "${version_diff}" != "$reference_version" ]]; then
+            echo "${1} is smaller"
+           return 1
+       else
+            echo "${1} is greater"
+           return 0
+       fi
+   fi
+}
